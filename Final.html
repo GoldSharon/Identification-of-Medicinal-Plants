@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Medicinal Plant Identification</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(gsr.png);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #image-upload {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Stylish button */
+        label {
+            display: inline-block;
+            padding: 15px 30px; /* Increase padding for a larger button */
+            font-size: 18px;
+            background-color: #e74c3c; /* Change button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        label:hover {
+            background-color: #c0392b; /* Change button color on hover */
+        }
+
+        #uploadedImage {
+            max-width: 300px;
+            display: none;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #result {
+            margin-top: 20px;
+            display: none;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #e74c3c; /* Change table header background color */
+            color: #fff;
+        }
+        #leaves {position:relative;top:-50px;width:100%;text-align: right;}
+
+#leaves i {
+    display: inline-block;
+    width: 200px;
+    height: 150px;
+    background: linear-gradient(to bottom right, #309900, #005600);
+    transform: skew(20deg);
+    border-radius: 5% 40% 70%;
+    box-shadow: inset 0px 0px 1px #222;
+    border: 1px solid #333;
+    z-index: 1;
+    -webkit-animation: falling 5s 0s infinite;
+}
+
+#leaves i:nth-of-type(2n) { -webkit-animation: falling2 5s 0s infinite; }
+#leaves i:nth-of-type(3n) { -webkit-animation: falling3 5s 0s infinite; }
+
+#leaves i:before {
+  position: absolute;
+  content: '';
+  top: 117px;
+  right: 9px;
+  height: 27px;
+  width: 32px;
+  transform: rotate(49deg);
+  border-radius: 0% 15% 15% 0%;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  border-left: 0px solid #222;
+  border-right: 1px solid #222;
+  background: linear-gradient(to right, rgba(0,100,0,1), #005600);
+  z-index: 1;
+}
+
+#leaves i:after {
+  content: '';
+  height: 125px;
+  width: 10px;
+  background: linear-gradient(to right, rgba(0,0,0,.15), rgba(0,0,0,0));
+  display: block;
+  transform: rotate(125deg);
+  position: absolute;
+  left: 85px;
+  border-radius:50%;
+}
+
+
+#leaves i:nth-of-type(n)    { height:23px; width:30px; }
+#leaves i:nth-of-type(n):before { width:7px; height:5px; top:17px; right:1px; }
+#leaves i:nth-of-type(n):after { width:2px; height:17px; left: 12px; top:0px; }
+
+#leaves i:nth-of-type(2n+1)    { height:11px; width:16px; }
+#leaves i:nth-of-type(2n+1):before { width:4px; height:3px; top:7px; right:0px; }
+#leaves i:nth-of-type(2n+1):after { width:2px; height:6px; left: 5px; top:1px; }
+
+#leaves i:nth-of-type(3n+2)  { height:17px; width:23px; }
+#leaves i:nth-of-type(3n+2):before  { height:4px; width:4px; top:12px; right:1px; }
+#leaves i:nth-of-type(3n+2):after  { height:10px; width:2px; top:1px; left:8px; }
+
+#leaves i:nth-of-type(n)   { -webkit-animation-delay: 1.9s;}
+#leaves i:nth-of-type(2n)  { -webkit-animation-delay: 3.9s;}
+#leaves i:nth-of-type(3n)  { -webkit-animation-delay: 2.3s;}
+#leaves i:nth-of-type(4n)  { -webkit-animation-delay: 4.4s;}
+#leaves i:nth-of-type(5n)  { -webkit-animation-delay: 5s;  }
+#leaves i:nth-of-type(6n)  { -webkit-animation-delay: 3.5s;}
+#leaves i:nth-of-type(7n)  { -webkit-animation-delay: 2.8s;}
+#leaves i:nth-of-type(8n)  { -webkit-animation-delay: 1.5s;}
+#leaves i:nth-of-type(9n)  { -webkit-animation-delay: 3.3s;}
+#leaves i:nth-of-type(10n) { -webkit-animation-delay: 2.5s;}
+#leaves i:nth-of-type(11n) { -webkit-animation-delay: 1.2s;}
+#leaves i:nth-of-type(12n) { -webkit-animation-delay: 4.1s;}
+#leaves i:nth-of-type(13n) { -webkit-animation-delay: 1s;  }
+#leaves i:nth-of-type(14n) { -webkit-animation-delay: 4.7s;}
+#leaves i:nth-of-type(15n) { -webkit-animation-delay: 3s;  }
+
+#leaves i:nth-of-type(n)    { background: linear-gradient(to bottom right, #309900, #005600); }
+#leaves i:nth-of-type(2n+2)  { background: linear-gradient(to bottom right, #5e9900, #2b5600); }
+#leaves i:nth-of-type(4n+1)  { background: linear-gradient(to bottom right, #990, #564500); }
+
+#leaves i:nth-of-type(n)    { opacity: 1;}
+#leaves i:nth-of-type(3n+1)  { opacity: 1;}
+#leaves i:nth-of-type(3n+2)  { opacity: 1;}
+
+#leaves i:nth-of-type(n)    {transform: rotate(180deg);}
+
+
+#leaves i:nth-of-type(n) { -webkit-animation-timing-function:ease-in-out;}
+
+@-webkit-keyframes falling {
+    
+    0% {
+        -webkit-transform:
+            translate3d(300,0,0)
+            rotate(0deg);
+    }
+    
+    100% {
+        -webkit-transform:
+            translate3d(-350px,700px,0)
+            rotate(90deg);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes falling3 {
+     0% {
+        -webkit-transform:
+            translate3d(0,0,0)
+            rotate(-20deg);
+    }
+    
+    100% {
+        -webkit-transform:
+            translate3d(-230px,640px,0)
+            rotate(-70deg);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes falling2 {
+     0% {
+        -webkit-transform:
+            translate3d(0,0,0)
+            rotate(90deg);
+    }
+    
+    100% {
+        -webkit-transform:
+            translate3d(-400px,680px,0)
+            rotate(0deg);
+        opacity: 0;
+    }
+}
+    </style>
+</head>
+<body background="gsr.png"> 
+    
+<div id="leaves">
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i> 
+  </div>
+    <div class="container">
+        <h1>Medicinal Plant Identification</h1>
+
+        <div id="image-upload">
+            <h3>Upload an Image</h3>
+            <form enctype="multipart/form-data" method="post">
+                <label for="fileInput">Choose Image</label>
+                <input type="file" id="fileInput" accept=".jpg, .jpeg, .png">
+                <button type="button" onclick="uploadImage()">Upload</button>
+            </form>
+            <img id="uploadedImage" src="" alt="Uploaded Image">
+            <p><strong>Uploaded File Name:</strong> <span id="uploadedFileName"></span></p>
+        </div>
+
+        <div id="result">
+            <h2>Plant Information:</h2>
+            <table>
+                <tr>
+                    <th>Scientific Name</th>
+                    <th>Genus Name</th>
+                    <th>Species Name</th>
+                    <th>Which Part of the Plant Has Medicinal Value</th>
+                    <th>Uses of the Plant</th>
+                    <th>Where in India You Can Find This Plant</th>
+                </tr>
+                <tr>
+                    <td id="Scientific_Name"></td>
+                    <td id="genusName"></td>
+                    <td id="speciesName"></td>
+                    <td id="whichPart"></td>
+                    <td id="usesOfPart"></td>
+                    <td id="findPlace"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function uploadImage() {
+            var fileInput = document.getElementById('fileInput');
+            var uploadedImage = document.getElementById('uploadedImage');
+            var uploadedFileName = document.getElementById('uploadedFileName');
+
+            var file = fileInput.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(file);
+
+                uploadedFileName.innerText = file.name;
+
+                // Send the image to the server for processing
+                var formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the result section with the server's response
+                    document.getElementById('result').style.display = 'block';
+                    document.getElementById('Scientific_Name').innerText = data.Scientific_Name;
+                    document.getElementById('genusName').innerText = data.genusName;
+                    document.getElementById('speciesName').innerText = data.speciesName;
+                    document.getElementById('whichPart').innerText = data.whichPart;
+                    document.getElementById('usesOfPart').innerText = data.usesOfPart;
+                    document.getElementById('findPlace').innerText = data.findPlace;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please select a file to upload.');
+            }
+        }
+    </script>
+</body>
+</html>
