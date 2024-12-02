@@ -2,9 +2,7 @@
 
 An application for detecting medicinal plant species using a Convolutional Neural Network (CNN) based on the ResNet architecture. The app classifies over 200 medicinal plant species and provides an intuitive web interface for researchers and users.
 
-## Project Structure
 
-├── index.html # Frontend: HTML interface for user interaction ├── app.py # Backend: Flask application to serve the web interface ├── training.ipynb # Jupyter Notebook: Contains the model training code ├── model.h5 # Trained model weights (ResNet architecture) ├── requirements.txt # Python dependencies └── README.md # Documentation
 
 markdown
 Copy code
